@@ -1,4 +1,4 @@
-import { CreateReceitasDTO } from './dto/create-receitas.dto';
+import { CreateReceitaDTO } from './dto/create-receita.dto';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Injectable } from '@nestjs/common';
 import { Repository } from 'typeorm';
@@ -15,7 +15,7 @@ export class ReceitasService {
     return await this.receitaRepository.find();
   }
 
-  async create(dados: CreateReceitasDTO): Promise<ReceitaEntity> {
+  async create(dados: CreateReceitaDTO): Promise<ReceitaEntity> {
     return await this.receitaRepository.save(
       this.receitaRepository.create(dados),
     );

@@ -1,0 +1,15 @@
+import { IsString, IsNotEmpty, IsNumber, IsDate } from 'class-validator';
+
+export class CreateReceitaDTO {
+  @IsString()
+  @IsNotEmpty()
+  descricao: string;
+
+  @IsNumber()
+  @IsNotEmpty()
+  valor: number;
+
+  @IsNotEmpty()
+  @IsDate()
+  data: Date;
+}
