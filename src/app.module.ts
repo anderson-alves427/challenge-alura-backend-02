@@ -2,6 +2,7 @@ import { ReceitaEntity } from './receitas/entity/receita.entity';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { Module } from '@nestjs/common';
 import { ReceitasModule } from './receitas/receitas.module';
+import { DespesasModule } from './despesas/despesas.module';
 
 @Module({
   imports: [
@@ -16,6 +17,7 @@ import { ReceitasModule } from './receitas/receitas.module';
       entities: [ReceitaEntity],
       synchronize: false,
     }),
+    DespesasModule,
   ],
   controllers: [],
   providers: [],
