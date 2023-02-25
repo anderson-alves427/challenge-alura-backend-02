@@ -1,5 +1,5 @@
 import { ReceitaRepository } from './receitas/receita.repository';
-import { ReceitaEntity } from './receitas/entity/receita.entity';
+import { ReceitaEntity } from './receitas/entities/receita.entity';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { Module } from '@nestjs/common';
 import { ReceitasModule } from './receitas/receitas.module';

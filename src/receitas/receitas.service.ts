@@ -1,6 +1,6 @@
 import { CreateReceitaDTO } from './dto/create-receita.dto';
 import { Injectable } from '@nestjs/common';
-import { ReceitaEntity } from './entity/receita.entity';
+import { ReceitaEntity } from './entities/receita.entity';
 import { HttpException } from '@nestjs/common';
 import { HttpStatus } from '@nestjs/common/enums';
 import { ReceitaRepository } from './receita.repository';

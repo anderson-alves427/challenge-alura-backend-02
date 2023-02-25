@@ -1,6 +1,6 @@
 import { Controller, Get, Body, Post } from '@nestjs/common';
 import { ReceitasService } from './receitas.service';
-import { ReceitaEntity } from './entity/receita.entity';
+import { ReceitaEntity } from './entities/receita.entity';
 import { CreateReceitaDTO } from './dto/create-receita.dto';
 
 @Controller('receitas')

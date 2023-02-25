@@ -10,7 +10,7 @@ import {
 import { Module } from '@nestjs/common';
 import { ReceitasController } from './receitas.controller';
 import { ReceitasService } from './receitas.service';
-import { ReceitaEntity } from './entity/receita.entity';
+import { ReceitaEntity } from './entities/receita.entity';
 import { DataSource } from 'typeorm';
 
 @Module({
