@@ -5,12 +5,14 @@ import { Injectable, HttpException } from '@nestjs/common';
 import { CreateDespesaDto } from './dto/create-despesa.dto';
 import { UpdateDespesaDto } from './dto/update-despesa.dto';
 import { DespesaRepository } from './despesa.repository';
+import { DespesaValidacoes } from './validacoes/despesa-validacoes';
 
 @Injectable()
 export class DespesasService {
   constructor(
     @InjectRepository(DespesaEntity)
-    private depesaRepository: DespesaRepository, // private readonly DepesasValidacoes: DepesaValidacoes,
+    private depesaRepository: DespesaRepository,
+    private readonly depesasValidacoes: DespesaValidacoes,
   ) {}
 
   create(createDespesaDto: CreateDespesaDto) {
@@ -29,8 +31,10 @@ export class DespesasService {
     return despesas;
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} despesa`;
+  async findOne(id: number): Promise<DespesaEntity> {
+    const receita = await this.depesasValidacoes.retornaDespesaExistente(id);
+
+    return receita;
   }
 
   update(id: number, updateDespesaDto: UpdateDespesaDto) {

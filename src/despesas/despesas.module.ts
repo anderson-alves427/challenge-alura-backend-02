@@ -9,13 +9,14 @@ import { DespesasController } from './despesas.controller';
 import { DespesaEntity } from './entities/despesa.entity';
 import { DataSource } from 'typeorm';
 import { customDespesaRepositoryMethods } from './despesa.repository';
+import { DespesaValidacoes } from './validacoes/despesa-validacoes';
 
 @Module({
   imports: [TypeOrmModule.forFeature([DespesaEntity])],
   controllers: [DespesasController],
   providers: [
     DespesasService,
-    // DepesasValidacoes,
+    DespesaValidacoes,
     {
       provide: getRepositoryToken(DespesaEntity),
       inject: [getDataSourceToken()],

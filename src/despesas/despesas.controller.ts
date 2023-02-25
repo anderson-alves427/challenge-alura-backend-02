@@ -27,8 +27,8 @@ export class DespesasController {
   }
 
   @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.despesasService.findOne(+id);
+  async findOne(@Param('id') id: number): Promise<DespesaEntity> {
+    return await this.despesasService.findOne(id);
   }
 
   @Patch(':id')
