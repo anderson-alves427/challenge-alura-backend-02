@@ -22,10 +22,13 @@ export const customReceitaRepositoryMethods: Pick<
     const receitasDuplicadasMesmoMes = await this.createQueryBuilder()
       .select('receita')
       .from(ReceitaEntity, 'receita')
-      .where('MONTH(receita.data) = :data AND receita.descricao = :descricao', {
-        data: numeracaoMesDaReceita,
-        descricao: descricao,
-      })
+      .where(
+        'MONTH(receita.data) = :data AND receita.descricao = :descricao AND receita.ativo = 1',
+        {
+          data: numeracaoMesDaReceita,
+          descricao: descricao,
+        },
+      )
       .getMany();
 
     return receitasDuplicadasMesmoMes;
