@@ -1,10 +1,11 @@
+import { ResponseDetalhamentoDespesaDTO } from './dto/response-detalhamento-despesa.dto';
 import { DespesaEntity } from './entities/despesa.entity';
 import {
   Controller,
   Get,
   Post,
   Body,
-  Patch,
+  Put,
   Param,
   Delete,
 } from '@nestjs/common';
@@ -17,8 +18,10 @@ export class DespesasController {
   constructor(private readonly despesasService: DespesasService) {}
 
   @Post()
-  create(@Body() createDespesaDto: CreateDespesaDto): Promise<DespesaEntity> {
-    return this.despesasService.create(createDespesaDto);
+  async create(
+    @Body() createDespesaDto: CreateDespesaDto,
+  ): Promise<DespesaEntity> {
+    return await this.despesasService.create(createDespesaDto);
   }
 
   @Get()
@@ -31,9 +34,12 @@ export class DespesasController {
     return await this.despesasService.findOne(id);
   }
 
-  @Patch(':id')
-  update(@Param('id') id: string, @Body() updateDespesaDto: UpdateDespesaDto) {
-    return this.despesasService.update(+id, updateDespesaDto);
+  @Put(':id')
+  async update(
+    @Param('id') id: number,
+    @Body() updateDespesaDto: UpdateDespesaDto,
+  ): Promise<ResponseDetalhamentoDespesaDTO> {
+    return await this.despesasService.update(id, updateDespesaDto);
   }
 
   @Delete(':id')

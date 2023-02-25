@@ -1,3 +1,4 @@
+import { ResponseDetalhamentoDespesaDTO } from './dto/response-detalhamento-despesa.dto';
 import { HttpStatus } from '@nestjs/common/enums';
 import { InjectRepository } from '@nestjs/typeorm';
 import { DespesaEntity } from './entities/despesa.entity';
@@ -21,7 +22,6 @@ export class DespesasService {
       numeracaoMesDaDespesa,
       createDespesaDto.descricao,
     );
-
     return await this.depesaRepository.save(
       this.depesaRepository.create(createDespesaDto),
     );
@@ -35,18 +35,22 @@ export class DespesasService {
         HttpStatus.NOT_FOUND,
       );
     }
-
     return despesas;
   }
 
   async findOne(id: number): Promise<DespesaEntity> {
     const receita = await this.depesasValidacoes.retornaDespesaExistente(id);
-
     return receita;
   }
 
-  update(id: number, updateDespesaDto: UpdateDespesaDto) {
-    return `This action updates a #${id} despesa`;
+  async update(
+    id: number,
+    updateDespesaDto: UpdateDespesaDto,
+  ): Promise<ResponseDetalhamentoDespesaDTO> {
+    const despesa = await this.depesasValidacoes.retornaDespesaExistente(id);
+    const despesaAtualizada = Object.assign(despesa, updateDespesaDto);
+    await this.depesaRepository.save(despesaAtualizada);
+    return despesaAtualizada;
   }
 
   remove(id: number) {
