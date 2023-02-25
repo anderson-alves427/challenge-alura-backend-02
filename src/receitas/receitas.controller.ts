@@ -1,4 +1,5 @@
-import { Controller, Get, Body, Post } from '@nestjs/common';
+import { ResponseDetalhamentoDTO } from './dto/response-detalhamento.dto';
+import { Controller, Get, Body, Post, Param } from '@nestjs/common';
 import { ReceitasService } from './receitas.service';
 import { ReceitaEntity } from './entities/receita.entity';
 import { CreateReceitaDTO } from './dto/create-receita.dto';
@@ -17,5 +18,10 @@ export class ReceitasController {
     @Body() dados: CreateReceitaDTO,
   ): Promise<ReceitaEntity> {
     return await this.receitasService.create(dados);
+  }
+
+  @Get(':id')
+  async detalhar(@Param('id') id: number): Promise<ResponseDetalhamentoDTO> {
+    return await this.receitasService.getReceitaById(id);
   }
 }

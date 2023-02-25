@@ -5,6 +5,7 @@ import { HttpException } from '@nestjs/common';
 import { HttpStatus } from '@nestjs/common/enums';
 import { ReceitaRepository } from './receita.repository';
 import { InjectRepository } from '@nestjs/typeorm';
+import { ResponseDetalhamentoDTO } from './dto/response-detalhamento.dto';
 
 @Injectable()
 export class ReceitasService {
@@ -34,5 +35,14 @@ export class ReceitasService {
     return await this.receitaRepository.save(
       this.receitaRepository.create(dados),
     );
+  }
+
+  async getReceitaById(id: number): Promise<ResponseDetalhamentoDTO> {
+    const receita = await this.receitaRepository.findOneBy({ id: id });
+
+    if (!receita) {
+      throw new HttpException('Receita não existente', HttpStatus.NOT_FOUND);
+    }
+    return receita;
   }
 }
