@@ -1,7 +1,4 @@
-import {
-  customReceitaRepositoryMethods,
-  ReceitaRepository,
-} from './receita.repository';
+import { customReceitaRepositoryMethods } from './receita.repository';
 import {
   getDataSourceToken,
   getRepositoryToken,
@@ -12,12 +9,14 @@ import { ReceitasController } from './receitas.controller';
 import { ReceitasService } from './receitas.service';
 import { ReceitaEntity } from './entities/receita.entity';
 import { DataSource } from 'typeorm';
+import { ReceitasValidacoes } from './validacoes/receitas-validacoes';
 
 @Module({
   imports: [TypeOrmModule.forFeature([ReceitaEntity])],
   controllers: [ReceitasController],
   providers: [
     ReceitasService,
+    ReceitasValidacoes,
     {
       provide: getRepositoryToken(ReceitaEntity),
       inject: [getDataSourceToken()],

@@ -1,3 +1,5 @@
+import { ResponseDeleteReceitaDTO } from './dto/response-deleteReceita.dto';
+import { ReceitasValidacoes } from './validacoes/receitas-validacoes';
 import { CreateReceitaDTO } from './dto/create-receita.dto';
 import { Injectable } from '@nestjs/common';
 import { ReceitaEntity } from './entities/receita.entity';
@@ -12,37 +14,47 @@ export class ReceitasService {
   constructor(
     @InjectRepository(ReceitaEntity)
     private receitaRepository: ReceitaRepository,
+
+    private readonly receitasValidacoes: ReceitasValidacoes,
   ) {}
 
   async findReceitas(): Promise<ReceitaEntity[]> {
-    return await this.receitaRepository.findReceita();
+    return await this.receitaRepository.findBy({ ativo: 1 });
   }
 
   async create(dados: CreateReceitaDTO): Promise<ReceitaEntity> {
     const numeracaoMesDaReceita = dados.data.getMonth() + 1;
-    const receitasDuplicadasMesmoMes =
-      await this.receitaRepository.findReceitasDuplicadasMesmoMes(
-        numeracaoMesDaReceita,
-        dados.descricao,
-      );
+    await this.receitasValidacoes.verificaSeReceitaEDuplicada(
+      numeracaoMesDaReceita,
+      dados.descricao,
+    );
 
-    if (receitasDuplicadasMesmoMes.length) {
-      throw new HttpException(
-        'Não é permitido receitas duplicadas no mesmo mês.',
-        HttpStatus.BAD_REQUEST,
-      );
-    }
     return await this.receitaRepository.save(
       this.receitaRepository.create(dados),
     );
   }
 
   async getReceitaById(id: number): Promise<ResponseDetalhamentoDTO> {
-    const receita = await this.receitaRepository.findOneBy({ id: id });
+    const receita = await this.receitaRepository.findOneBy({
+      id: id,
+      ativo: 1,
+    });
 
     if (!receita) {
       throw new HttpException('Receita não existente', HttpStatus.NOT_FOUND);
     }
     return receita;
+  }
+
+  async deletarReceita(id: number): Promise<ResponseDeleteReceitaDTO> {
+    const receita = await this.receitaRepository.findOneBy({ id: id });
+    if (!receita || !receita.ativo) {
+      throw new HttpException('Receita não existente', HttpStatus.NOT_FOUND);
+    }
+    receita.ativo = 0;
+    await this.receitaRepository.save(receita);
+    return {
+      message: 'Delecao ocorrida com sucesso',
+    };
   }
 }

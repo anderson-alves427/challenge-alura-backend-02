@@ -1,5 +1,6 @@
+import { ResponseDeleteReceitaDTO } from './dto/response-deleteReceita.dto';
 import { ResponseDetalhamentoDTO } from './dto/response-detalhamento.dto';
-import { Controller, Get, Body, Post, Param } from '@nestjs/common';
+import { Controller, Get, Body, Post, Param, Delete } from '@nestjs/common';
 import { ReceitasService } from './receitas.service';
 import { ReceitaEntity } from './entities/receita.entity';
 import { CreateReceitaDTO } from './dto/create-receita.dto';
@@ -23,5 +24,10 @@ export class ReceitasController {
   @Get(':id')
   async detalhar(@Param('id') id: number): Promise<ResponseDetalhamentoDTO> {
     return await this.receitasService.getReceitaById(id);
+  }
+
+  @Delete(':id')
+  async deletar(@Param('id') id: number): Promise<ResponseDeleteReceitaDTO> {
+    return await this.receitasService.deletarReceita(id);
   }
 }

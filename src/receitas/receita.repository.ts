@@ -4,8 +4,6 @@ import { ReceitaEntity } from './entities/receita.entity';
 export interface ReceitaRepository extends Repository<ReceitaEntity> {
   this: Repository<ReceitaEntity>;
 
-  findReceita(): Promise<ReceitaEntity[]>;
-
   findReceitasDuplicadasMesmoMes(
     numeracaoMesDaReceita: number,
     descricao: string,
@@ -14,12 +12,8 @@ export interface ReceitaRepository extends Repository<ReceitaEntity> {
 
 export const customReceitaRepositoryMethods: Pick<
   ReceitaRepository,
-  'findReceita' | 'findReceitasDuplicadasMesmoMes'
+  'findReceitasDuplicadasMesmoMes'
 > = {
-  async findReceita() {
-    return await this.find();
-  },
-
   async findReceitasDuplicadasMesmoMes(
     this: Repository<ReceitaEntity>,
     numeracaoMesDaReceita,
