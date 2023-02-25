@@ -1,3 +1,4 @@
+import { DespesasEntity } from './despesas/entities/despesa.entity';
 import { ReceitaRepository } from './receitas/receita.repository';
 import { ReceitaEntity } from './receitas/entities/receita.entity';
 import { TypeOrmModule } from '@nestjs/typeorm';
@@ -15,7 +16,7 @@ import { DespesasModule } from './despesas/despesas.module';
       username: 'root',
       password: '1234',
       database: 'challenge_02_alura_backend',
-      entities: [ReceitaEntity],
+      entities: [ReceitaEntity, DespesasEntity],
       synchronize: false,
     }),
     DespesasModule,
