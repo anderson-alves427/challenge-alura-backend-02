@@ -1,3 +1,4 @@
+import { ReceitaRepository } from './receitas/receita.repository';
 import { ReceitaEntity } from './receitas/entity/receita.entity';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { Module } from '@nestjs/common';

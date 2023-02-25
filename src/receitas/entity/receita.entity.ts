@@ -1,7 +1,7 @@
-import { Entity, Column, PrimaryGeneratedColumn } from 'typeorm';
+import { Entity, Column, PrimaryGeneratedColumn, BaseEntity } from 'typeorm';
 
 @Entity({ name: 'receitas' })
-export class ReceitaEntity {
+export class ReceitaEntity extends BaseEntity {
   @PrimaryGeneratedColumn('increment')
   id: number;
 
@@ -14,10 +14,10 @@ export class ReceitaEntity {
   @Column('date')
   data: Date;
 
-  constructor(todo?: Partial<ReceitaEntity>) {
-    this.id = todo?.id;
-    this.descricao = todo?.descricao;
-    this.valor = todo?.valor;
-    this.data = todo?.data;
-  }
+  // constructor(todo?: Partial<ReceitaEntity>) {
+  //   this.id = todo?.id;
+  //   this.descricao = todo?.descricao;
+  //   this.valor = todo?.valor;
+  //   this.data = todo?.data;
+  // }
 }

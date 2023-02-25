@@ -1,30 +1,29 @@
 import { CreateReceitaDTO } from './dto/create-receita.dto';
-import { InjectRepository } from '@nestjs/typeorm';
 import { Injectable } from '@nestjs/common';
-import { Repository } from 'typeorm';
 import { ReceitaEntity } from './entity/receita.entity';
 import { HttpException } from '@nestjs/common';
 import { HttpStatus } from '@nestjs/common/enums';
+import { ReceitaRepository } from './receita.repository';
+import { InjectRepository } from '@nestjs/typeorm';
 
 @Injectable()
 export class ReceitasService {
   constructor(
     @InjectRepository(ReceitaEntity)
-    private readonly receitaRepository: Repository<ReceitaEntity>,
+    private receitaRepository: ReceitaRepository,
   ) {}
 
   async findReceitas(): Promise<ReceitaEntity[]> {
-    return await this.receitaRepository.find();
+    return await this.receitaRepository.findReceita();
   }
 
   async create(dados: CreateReceitaDTO): Promise<ReceitaEntity> {
     const numeracaoMesDaReceita = dados.data.getMonth() + 1;
-    const receitasDuplicadasMesmoMes = await this.receitaRepository
-      .createQueryBuilder()
-      .select('receita')
-      .from(ReceitaEntity, 'receita')
-      .where('MONTH(receita.data) = :data', { data: numeracaoMesDaReceita })
-      .getMany();
+    const receitasDuplicadasMesmoMes =
+      await this.receitaRepository.findReceitasDuplicadasMesmoMes(
+        numeracaoMesDaReceita,
+        dados.descricao,
+      );
 
     if (receitasDuplicadasMesmoMes.length) {
       throw new HttpException(

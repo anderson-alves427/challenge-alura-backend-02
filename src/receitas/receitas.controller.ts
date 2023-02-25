@@ -16,7 +16,6 @@ export class ReceitasController {
   async createReceitas(
     @Body() dados: CreateReceitaDTO,
   ): Promise<ReceitaEntity> {
-    console.log(dados);
     return await this.receitasService.create(dados);
   }
 }
