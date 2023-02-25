@@ -15,8 +15,16 @@ export class DespesasService {
     private readonly depesasValidacoes: DespesaValidacoes,
   ) {}
 
-  create(createDespesaDto: CreateDespesaDto) {
-    return 'This action adds a new despesa';
+  async create(createDespesaDto: CreateDespesaDto): Promise<DespesaEntity> {
+    const numeracaoMesDaDespesa = createDespesaDto.data.getMonth() + 1;
+    await this.depesasValidacoes.verificaSeDespesaEDuplicada(
+      numeracaoMesDaDespesa,
+      createDespesaDto.descricao,
+    );
+
+    return await this.depesaRepository.save(
+      this.depesaRepository.create(createDespesaDto),
+    );
   }
 
   async findAll(): Promise<DespesaEntity[]> {

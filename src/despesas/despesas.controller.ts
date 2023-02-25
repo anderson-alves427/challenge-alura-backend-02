@@ -17,7 +17,7 @@ export class DespesasController {
   constructor(private readonly despesasService: DespesasService) {}
 
   @Post()
-  create(@Body() createDespesaDto: CreateDespesaDto) {
+  create(@Body() createDespesaDto: CreateDespesaDto): Promise<DespesaEntity> {
     return this.despesasService.create(createDespesaDto);
   }
 
