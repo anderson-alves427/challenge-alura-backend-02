@@ -7,6 +7,7 @@ import { CreateDespesaDto } from './dto/create-despesa.dto';
 import { UpdateDespesaDto } from './dto/update-despesa.dto';
 import { DespesaRepository } from './despesa.repository';
 import { DespesaValidacoes } from './validacoes/despesa-validacoes';
+import { ResponseDeletaDespesaDTO } from './dto/response-deleta-despesa.dto';
 
 @Injectable()
 export class DespesasService {
@@ -53,7 +54,12 @@ export class DespesasService {
     return despesaAtualizada;
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} despesa`;
+  async remove(id: number): Promise<ResponseDeletaDespesaDTO> {
+    const despesa = await this.depesasValidacoes.retornaDespesaExistente(id);
+    despesa.ativo = 0;
+    await this.depesaRepository.save(despesa);
+    return {
+      message: 'Deleção ocorrida com sucesso',
+    };
   }
 }

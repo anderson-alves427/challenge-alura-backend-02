@@ -1,3 +1,4 @@
+import { ResponseDeletaDespesaDTO } from './dto/response-deleta-despesa.dto';
 import { ResponseDetalhamentoDespesaDTO } from './dto/response-detalhamento-despesa.dto';
 import { DespesaEntity } from './entities/despesa.entity';
 import {
@@ -30,20 +31,20 @@ export class DespesasController {
   }
 
   @Get(':id')
-  async findOne(@Param('id') id: number): Promise<DespesaEntity> {
-    return await this.despesasService.findOne(id);
+  async findOne(@Param('id') id: string): Promise<DespesaEntity> {
+    return await this.despesasService.findOne(+id);
   }
 
   @Put(':id')
   async update(
-    @Param('id') id: number,
+    @Param('id') id: string,
     @Body() updateDespesaDto: UpdateDespesaDto,
   ): Promise<ResponseDetalhamentoDespesaDTO> {
-    return await this.despesasService.update(id, updateDespesaDto);
+    return await this.despesasService.update(+id, updateDespesaDto);
   }
 
   @Delete(':id')
-  remove(@Param('id') id: string) {
+  remove(@Param('id') id: string): Promise<ResponseDeletaDespesaDTO> {
     return this.despesasService.remove(+id);
   }
 }
