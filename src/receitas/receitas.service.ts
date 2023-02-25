@@ -1,3 +1,4 @@
+import { UpdateReceitaDTO } from './dto/update-receita.dto';
 import { ResponseDeleteReceitaDTO } from './dto/response-deleteReceita.dto';
 import { ReceitasValidacoes } from './validacoes/receitas-validacoes';
 import { CreateReceitaDTO } from './dto/create-receita.dto';
@@ -39,11 +40,28 @@ export class ReceitasService {
       id: id,
       ativo: 1,
     });
-
     if (!receita) {
       throw new HttpException('Receita não existente', HttpStatus.NOT_FOUND);
     }
+
     return receita;
+  }
+
+  async atualizarReceitas(
+    id: number,
+    dados: UpdateReceitaDTO,
+  ): Promise<ReceitaEntity> {
+    const receita = await this.receitaRepository.findOneBy({
+      id: id,
+      ativo: 1,
+    });
+    if (!receita) {
+      throw new HttpException('Receita não existente', HttpStatus.NOT_FOUND);
+    }
+    const receitaAtualizada = Object.assign(receita, dados);
+    await this.receitaRepository.save(receitaAtualizada);
+
+    return receitaAtualizada;
   }
 
   async deletarReceita(id: number): Promise<ResponseDeleteReceitaDTO> {
