@@ -14,7 +14,7 @@ export class ReceitasValidacoes {
   async verificaSeReceitaEDuplicada(
     numeracaoMesDaReceita: number,
     descricao: string,
-  ) {
+  ): Promise<void> {
     const receitasDuplicadasMesmoMes =
       await this.receitaRepository.findReceitasDuplicadasMesmoMes(
         numeracaoMesDaReceita,
@@ -27,5 +27,17 @@ export class ReceitasValidacoes {
         HttpStatus.BAD_REQUEST,
       );
     }
+  }
+
+  async retornaReceitaExistente(id: number): Promise<ReceitaEntity> {
+    const receita = await this.receitaRepository.findOneBy({
+      id: id,
+      ativo: 1,
+    });
+    if (!receita || !receita.ativo) {
+      throw new HttpException('Receita não existente', HttpStatus.NOT_FOUND);
+    }
+
+    return receita;
   }
 }

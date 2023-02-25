@@ -4,8 +4,6 @@ import { ReceitasValidacoes } from './validacoes/receitas-validacoes';
 import { CreateReceitaDTO } from './dto/create-receita.dto';
 import { Injectable } from '@nestjs/common';
 import { ReceitaEntity } from './entities/receita.entity';
-import { HttpException } from '@nestjs/common';
-import { HttpStatus } from '@nestjs/common/enums';
 import { ReceitaRepository } from './receita.repository';
 import { InjectRepository } from '@nestjs/typeorm';
 import { ResponseDetalhamentoDTO } from './dto/response-detalhamento.dto';
@@ -36,13 +34,7 @@ export class ReceitasService {
   }
 
   async getReceitaById(id: number): Promise<ResponseDetalhamentoDTO> {
-    const receita = await this.receitaRepository.findOneBy({
-      id: id,
-      ativo: 1,
-    });
-    if (!receita) {
-      throw new HttpException('Receita não existente', HttpStatus.NOT_FOUND);
-    }
+    const receita = await this.receitasValidacoes.retornaReceitaExistente(id);
 
     return receita;
   }
@@ -51,13 +43,7 @@ export class ReceitasService {
     id: number,
     dados: UpdateReceitaDTO,
   ): Promise<ReceitaEntity> {
-    const receita = await this.receitaRepository.findOneBy({
-      id: id,
-      ativo: 1,
-    });
-    if (!receita) {
-      throw new HttpException('Receita não existente', HttpStatus.NOT_FOUND);
-    }
+    const receita = await this.receitasValidacoes.retornaReceitaExistente(id);
     const receitaAtualizada = Object.assign(receita, dados);
     await this.receitaRepository.save(receitaAtualizada);
 
@@ -65,10 +51,7 @@ export class ReceitasService {
   }
 
   async deletarReceita(id: number): Promise<ResponseDeleteReceitaDTO> {
-    const receita = await this.receitaRepository.findOneBy({ id: id });
-    if (!receita || !receita.ativo) {
-      throw new HttpException('Receita não existente', HttpStatus.NOT_FOUND);
-    }
+    const receita = await this.receitasValidacoes.retornaReceitaExistente(id);
     receita.ativo = 0;
     await this.receitaRepository.save(receita);
     return {
