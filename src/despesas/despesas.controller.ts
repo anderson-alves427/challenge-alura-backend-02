@@ -1,3 +1,4 @@
+import { DespesaEntity } from './entities/despesa.entity';
 import {
   Controller,
   Get,
@@ -21,8 +22,8 @@ export class DespesasController {
   }
 
   @Get()
-  findAll() {
-    return this.despesasService.findAll();
+  async findAll(): Promise<DespesaEntity[]> {
+    return await this.despesasService.findAll();
   }
 
   @Get(':id')
