@@ -8,11 +8,13 @@ export interface DespesaRepository extends Repository<Despesa> {
     numeracaoMesDaDespesa: number,
     descricao: string,
   ): Promise<Despesa[]>;
+
+  findDespesasPorMesEAno(mes: number, ano: number): Promise<Despesa[]>;
 }
 
 export const customDespesaRepositoryMethods: Pick<
   DespesaRepository,
-  'findDespesasDuplicadasMesmoMes'
+  'findDespesasDuplicadasMesmoMes' | 'findDespesasPorMesEAno'
 > = {
   async findDespesasDuplicadasMesmoMes(
     this: Repository<Despesa>,
@@ -32,5 +34,20 @@ export const customDespesaRepositoryMethods: Pick<
       .getMany();
 
     return DespesasDuplicadasMesmoMes;
+  },
+  async findDespesasPorMesEAno(mes: number, ano: number): Promise<Despesa[]> {
+    const receitasDuplicadasMesmoMes = await this.createQueryBuilder()
+      .select('despesas')
+      .from(Despesa, 'despesas')
+      .where(
+        'MONTH(despesas.data) = :mes AND YEAR(despesas.data) = :ano AND despesas.ativo = 1',
+        {
+          mes: mes,
+          ano: ano,
+        },
+      )
+      .getMany();
+
+    return receitasDuplicadasMesmoMes;
   },
 };

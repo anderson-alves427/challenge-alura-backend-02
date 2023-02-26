@@ -1,8 +1,10 @@
+import { HttpStatus } from '@nestjs/common/enums';
+import { FiltraDespesaMesAnoDTO } from './dto/filtra-despesa-mes-ano.dto';
 import { ListDespesaDTO } from './dto/list-despesa.dto';
 import { ResponseDetalhamentoDespesaDTO } from './dto/response-detalhamento-despesa.dto';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Despesa } from './entities/despesa.entity';
-import { Injectable } from '@nestjs/common';
+import { Injectable, HttpException } from '@nestjs/common';
 import { CreateDespesaDto } from './dto/create-despesa.dto';
 import { UpdateDespesaDto } from './dto/update-despesa.dto';
 import { DespesaRepository } from './despesa.repository';
@@ -62,5 +64,22 @@ export class DespesasService {
     return {
       message: 'Deleção ocorrida com sucesso',
     };
+  }
+
+  async filtraDespesaMesAnoDTO(
+    filtraDespesaMesAnoDTO: FiltraDespesaMesAnoDTO,
+  ): Promise<Despesa[]> {
+    const receitas = await this.depesaRepository.findDespesasPorMesEAno(
+      +filtraDespesaMesAnoDTO.mes,
+      +filtraDespesaMesAnoDTO.ano,
+    );
+    if (!receitas.length) {
+      throw new HttpException(
+        'Nenhuma despesa encontrada com esse filtro de mês e ano',
+        HttpStatus.NOT_FOUND,
+      );
+    }
+
+    return receitas;
   }
 }

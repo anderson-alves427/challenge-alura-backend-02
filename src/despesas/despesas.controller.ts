@@ -1,3 +1,4 @@
+import { FiltraDespesaMesAnoDTO } from './dto/filtra-despesa-mes-ano.dto';
 import { ListDespesaDTO } from './dto/list-despesa.dto';
 import { ResponseDeletaDespesaDTO } from './dto/response-deleta-despesa.dto';
 import { ResponseDetalhamentoDespesaDTO } from './dto/response-detalhamento-despesa.dto';
@@ -46,5 +47,14 @@ export class DespesasController {
   @Delete(':id')
   async remove(@Param('id') id: string): Promise<ResponseDeletaDespesaDTO> {
     return await this.despesasService.remove(+id);
+  }
+
+  @Get(':ano/:mes')
+  async filtraDespesaMesEAno(
+    @Param() filtraDespesaMesAnoDTO: FiltraDespesaMesAnoDTO,
+  ): Promise<Despesa[]> {
+    return await this.despesasService.filtraDespesaMesAnoDTO(
+      filtraDespesaMesAnoDTO,
+    );
   }
 }
