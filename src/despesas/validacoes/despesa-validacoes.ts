@@ -1,3 +1,4 @@
+import { CreateDespesaDto } from './../dto/create-despesa.dto';
 import { HttpStatus } from '@nestjs/common/enums';
 import { Despesa } from 'src/Despesas/entities/Despesa.entity';
 import { InjectRepository } from '@nestjs/typeorm';
@@ -39,5 +40,12 @@ export class DespesaValidacoes {
     }
 
     return Despesa;
+  }
+
+  async insereCategoria(createDespesaDto: CreateDespesaDto): Promise<void> {
+    const categoria = createDespesaDto?.categoria
+      ? createDespesaDto.categoria
+      : 'Outros';
+    createDespesaDto.categoria = categoria;
   }
 }

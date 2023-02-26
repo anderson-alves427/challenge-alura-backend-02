@@ -20,10 +20,10 @@ export const customDespesaRepositoryMethods: Pick<
     descricao,
   ) {
     const DespesasDuplicadasMesmoMes = await this.createQueryBuilder()
-      .select('despesa')
-      .from(Despesa, 'despesa')
+      .select('despesas')
+      .from(Despesa, 'despesas')
       .where(
-        'MONTH(despesa.data) = :data AND despesa.descricao = :descricao AND despesa.ativo = 1',
+        'MONTH(despesas.data) = :data AND despesas.descricao = :descricao AND despesas.ativo = 1',
         {
           data: numeracaoMesDaDespesa,
           descricao: descricao,

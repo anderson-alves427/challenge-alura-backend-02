@@ -22,7 +22,7 @@ export class CreateDespesaDto {
 
   @IsString()
   @IsOptional()
-  id_categoria:
+  categoria?:
     | 'Alimentação'
     | 'Sáude'
     | 'Moradia'

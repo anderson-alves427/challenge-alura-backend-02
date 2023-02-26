@@ -24,6 +24,7 @@ export class DespesasService {
       createDespesaDto.descricao,
     );
 
+    this.depesasValidacoes.insereCategoria(createDespesaDto);
     return await this.depesaRepository.save(
       this.depesaRepository.create(createDespesaDto),
     );

@@ -16,4 +16,7 @@ export class Despesa {
 
   @Column('tinyint', { default: 1 })
   ativo: number;
+
+  @Column('varchar', { length: 250 })
+  categoria: string;
 }
