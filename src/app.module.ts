@@ -1,3 +1,4 @@
+import { Categoria } from './despesas/entities/categoria.entity';
 import { Despesa } from './despesas/entities/despesa.entity';
 import { Receita } from './receitas/entities/receita.entity';
 import { TypeOrmModule } from '@nestjs/typeorm';
@@ -15,7 +16,7 @@ import { DespesasModule } from './despesas/despesas.module';
       username: 'root',
       password: '1234',
       database: 'challenge_02_alura_backend',
-      entities: [Receita, Despesa],
+      entities: [Receita, Despesa, Categoria],
       synchronize: false,
     }),
     DespesasModule,

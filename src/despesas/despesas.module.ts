@@ -1,3 +1,4 @@
+import { Categoria } from './entities/categoria.entity';
 import {
   TypeOrmModule,
   getRepositoryToken,
@@ -12,7 +13,7 @@ import { customDespesaRepositoryMethods } from './despesa.repository';
 import { DespesaValidacoes } from './validacoes/despesa-validacoes';
 
 @Module({
-  imports: [TypeOrmModule.forFeature([Despesa])],
+  imports: [TypeOrmModule.forFeature([Despesa, Categoria])],
   controllers: [DespesasController],
   providers: [
     DespesasService,
