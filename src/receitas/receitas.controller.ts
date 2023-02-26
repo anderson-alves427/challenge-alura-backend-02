@@ -1,3 +1,4 @@
+import { ListReceitaDTO } from './dto/list-receita.dto';
 import { UpdateReceitaDTO } from './dto/update-receita.dto';
 import { ResponseDeleteReceitaDTO } from './dto/response-deleteReceita.dto';
 import { ResponseDetalhamentoDTO } from './dto/response-detalhamento.dto';
@@ -9,6 +10,7 @@ import {
   Param,
   Delete,
   Put,
+  Query,
 } from '@nestjs/common';
 import { ReceitasService } from './receitas.service';
 import { Receita } from './entities/receita.entity';
@@ -19,8 +21,10 @@ export class ReceitasController {
   constructor(private readonly receitasService: ReceitasService) {}
 
   @Get()
-  async getReceitas(): Promise<Receita[]> {
-    return await this.receitasService.findReceitas();
+  async getReceitas(
+    @Query() listReceitasDTO: ListReceitaDTO,
+  ): Promise<Receita[]> {
+    return await this.receitasService.findReceitas(listReceitasDTO);
   }
 
   @Post()
