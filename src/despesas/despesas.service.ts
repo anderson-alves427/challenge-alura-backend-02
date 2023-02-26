@@ -1,7 +1,7 @@
 import { ResponseDetalhamentoDespesaDTO } from './dto/response-detalhamento-despesa.dto';
 import { HttpStatus } from '@nestjs/common/enums';
 import { InjectRepository } from '@nestjs/typeorm';
-import { DespesaEntity } from './entities/despesa.entity';
+import { Despesa } from './entities/despesa.entity';
 import { Injectable, HttpException } from '@nestjs/common';
 import { CreateDespesaDto } from './dto/create-despesa.dto';
 import { UpdateDespesaDto } from './dto/update-despesa.dto';
@@ -12,12 +12,12 @@ import { ResponseDeletaDespesaDTO } from './dto/response-deleta-despesa.dto';
 @Injectable()
 export class DespesasService {
   constructor(
-    @InjectRepository(DespesaEntity)
+    @InjectRepository(Despesa)
     private depesaRepository: DespesaRepository,
     private readonly depesasValidacoes: DespesaValidacoes,
   ) {}
 
-  async create(createDespesaDto: CreateDespesaDto): Promise<DespesaEntity> {
+  async create(createDespesaDto: CreateDespesaDto): Promise<Despesa> {
     const numeracaoMesDaDespesa = createDespesaDto.data.getMonth() + 1;
     await this.depesasValidacoes.verificaSeDespesaEDuplicada(
       numeracaoMesDaDespesa,
@@ -28,7 +28,7 @@ export class DespesasService {
     );
   }
 
-  async findAll(): Promise<DespesaEntity[]> {
+  async findAll(): Promise<Despesa[]> {
     const despesas = await this.depesaRepository.findBy({ ativo: 1 });
     if (!despesas.length) {
       throw new HttpException(
@@ -39,7 +39,7 @@ export class DespesasService {
     return despesas;
   }
 
-  async findOne(id: number): Promise<DespesaEntity> {
+  async findOne(id: number): Promise<Despesa> {
     const receita = await this.depesasValidacoes.retornaDespesaExistente(id);
     return receita;
   }

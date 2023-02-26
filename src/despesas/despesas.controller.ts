@@ -1,6 +1,6 @@
 import { ResponseDeletaDespesaDTO } from './dto/response-deleta-despesa.dto';
 import { ResponseDetalhamentoDespesaDTO } from './dto/response-detalhamento-despesa.dto';
-import { DespesaEntity } from './entities/despesa.entity';
+import { Despesa } from './entities/despesa.entity';
 import {
   Controller,
   Get,
@@ -19,19 +19,17 @@ export class DespesasController {
   constructor(private readonly despesasService: DespesasService) {}
 
   @Post()
-  async create(
-    @Body() createDespesaDto: CreateDespesaDto,
-  ): Promise<DespesaEntity> {
+  async create(@Body() createDespesaDto: CreateDespesaDto): Promise<Despesa> {
     return await this.despesasService.create(createDespesaDto);
   }
 
   @Get()
-  async findAll(): Promise<DespesaEntity[]> {
+  async findAll(): Promise<Despesa[]> {
     return await this.despesasService.findAll();
   }
 
   @Get(':id')
-  async findOne(@Param('id') id: string): Promise<DespesaEntity> {
+  async findOne(@Param('id') id: string): Promise<Despesa> {
     return await this.despesasService.findOne(+id);
   }
 

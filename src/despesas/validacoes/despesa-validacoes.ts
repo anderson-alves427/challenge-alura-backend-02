@@ -1,5 +1,5 @@
 import { HttpStatus } from '@nestjs/common/enums';
-import { DespesaEntity } from 'src/Despesas/entities/Despesa.entity';
+import { Despesa } from 'src/Despesas/entities/Despesa.entity';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Injectable, HttpException } from '@nestjs/common';
 import { DespesaRepository } from '../despesa.repository';
@@ -7,7 +7,7 @@ import { DespesaRepository } from '../despesa.repository';
 @Injectable()
 export class DespesaValidacoes {
   constructor(
-    @InjectRepository(DespesaEntity)
+    @InjectRepository(Despesa)
     private despesaRepository: DespesaRepository,
   ) {}
 
@@ -29,7 +29,7 @@ export class DespesaValidacoes {
     }
   }
 
-  async retornaDespesaExistente(id: number): Promise<DespesaEntity> {
+  async retornaDespesaExistente(id: number): Promise<Despesa> {
     const Despesa = await this.despesaRepository.findOneBy({
       id: id,
       ativo: 1,

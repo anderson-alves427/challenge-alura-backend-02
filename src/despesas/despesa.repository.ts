@@ -1,13 +1,13 @@
 import type { Repository } from 'typeorm';
-import { DespesaEntity } from './entities/despesa.entity';
+import { Despesa } from './entities/despesa.entity';
 
-export interface DespesaRepository extends Repository<DespesaEntity> {
-  this: Repository<DespesaEntity>;
+export interface DespesaRepository extends Repository<Despesa> {
+  this: Repository<Despesa>;
 
   findDespesasDuplicadasMesmoMes(
     numeracaoMesDaDespesa: number,
     descricao: string,
-  ): Promise<DespesaEntity[]>;
+  ): Promise<Despesa[]>;
 }
 
 export const customDespesaRepositoryMethods: Pick<
@@ -15,13 +15,13 @@ export const customDespesaRepositoryMethods: Pick<
   'findDespesasDuplicadasMesmoMes'
 > = {
   async findDespesasDuplicadasMesmoMes(
-    this: Repository<DespesaEntity>,
+    this: Repository<Despesa>,
     numeracaoMesDaDespesa,
     descricao,
   ) {
     const DespesasDuplicadasMesmoMes = await this.createQueryBuilder()
       .select('despesa')
-      .from(DespesaEntity, 'despesa')
+      .from(Despesa, 'despesa')
       .where(
         'MONTH(despesa.data) = :data AND despesa.descricao = :descricao AND despesa.ativo = 1',
         {

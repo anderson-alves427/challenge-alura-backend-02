@@ -1,7 +1,7 @@
-import { Entity, Column, PrimaryGeneratedColumn } from 'typeorm';
+import { Entity, Column, PrimaryGeneratedColumn, ManyToOne } from 'typeorm';
 
 @Entity({ name: 'despesas' })
-export class DespesaEntity {
+export class Despesa {
   @PrimaryGeneratedColumn('increment')
   id: number;
 
@@ -16,4 +16,6 @@ export class DespesaEntity {
 
   @Column('tinyint', { default: 1 })
   ativo: number;
+
+  // @ManyToOne()
 }

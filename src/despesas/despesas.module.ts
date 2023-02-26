@@ -6,23 +6,23 @@ import {
 import { Module } from '@nestjs/common';
 import { DespesasService } from './despesas.service';
 import { DespesasController } from './despesas.controller';
-import { DespesaEntity } from './entities/despesa.entity';
+import { Despesa } from './entities/despesa.entity';
 import { DataSource } from 'typeorm';
 import { customDespesaRepositoryMethods } from './despesa.repository';
 import { DespesaValidacoes } from './validacoes/despesa-validacoes';
 
 @Module({
-  imports: [TypeOrmModule.forFeature([DespesaEntity])],
+  imports: [TypeOrmModule.forFeature([Despesa])],
   controllers: [DespesasController],
   providers: [
     DespesasService,
     DespesaValidacoes,
     {
-      provide: getRepositoryToken(DespesaEntity),
+      provide: getRepositoryToken(Despesa),
       inject: [getDataSourceToken()],
       useFactory(dataSource: DataSource) {
         return dataSource
-          .getRepository(DespesaEntity)
+          .getRepository(Despesa)
           .extend(customDespesaRepositoryMethods);
       },
     },
