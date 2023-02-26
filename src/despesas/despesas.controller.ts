@@ -44,7 +44,7 @@ export class DespesasController {
   }
 
   @Delete(':id')
-  remove(@Param('id') id: string): Promise<ResponseDeletaDespesaDTO> {
-    return this.despesasService.remove(+id);
+  async remove(@Param('id') id: string): Promise<ResponseDeletaDespesaDTO> {
+    return await this.despesasService.remove(+id);
   }
 }

@@ -1,3 +1,4 @@
+import { FiltraReceitaMesAnoDTO } from './dto/filtra-receita-mes-ano.dto';
 import { ListReceitaDTO } from './dto/list-receita.dto';
 import { UpdateReceitaDTO } from './dto/update-receita.dto';
 import { ResponseDeleteReceitaDTO } from './dto/response-deleteReceita.dto';
@@ -48,5 +49,14 @@ export class ReceitasController {
   @Delete(':id')
   async deletar(@Param('id') id: number): Promise<ResponseDeleteReceitaDTO> {
     return await this.receitasService.deletarReceita(id);
+  }
+
+  @Get(':ano/:mes')
+  async filtraReceitaMesEAno(
+    @Param() filtraReceitaMesAnoDTO: FiltraReceitaMesAnoDTO,
+  ): Promise<Receita[]> {
+    return await this.receitasService.filtraReceitaMesAnoDTO(
+      filtraReceitaMesAnoDTO,
+    );
   }
 }

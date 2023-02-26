@@ -1,9 +1,11 @@
+import { HttpStatus } from '@nestjs/common/enums';
+import { FiltraReceitaMesAnoDTO } from './dto/filtra-receita-mes-ano.dto';
 import { ListReceitaDTO } from './dto/list-receita.dto';
 import { UpdateReceitaDTO } from './dto/update-receita.dto';
 import { ResponseDeleteReceitaDTO } from './dto/response-deleteReceita.dto';
 import { ReceitasValidacoes } from './validacoes/receitas-validacoes';
 import { CreateReceitaDTO } from './dto/create-receita.dto';
-import { Injectable } from '@nestjs/common';
+import { Injectable, HttpException } from '@nestjs/common';
 import { Receita } from './entities/receita.entity';
 import { ReceitaRepository } from './receita.repository';
 import { InjectRepository } from '@nestjs/typeorm';
@@ -65,5 +67,22 @@ export class ReceitasService {
     return {
       message: 'Delecao ocorrida com sucesso',
     };
+  }
+
+  async filtraReceitaMesAnoDTO(
+    filtraReceitaMesAnoDTO: FiltraReceitaMesAnoDTO,
+  ): Promise<Receita[]> {
+    const receitas = await this.receitaRepository.findReceitasPorMesEAno(
+      +filtraReceitaMesAnoDTO.mes,
+      +filtraReceitaMesAnoDTO.ano,
+    );
+    if (!receitas.length) {
+      throw new HttpException(
+        'Nenhuma receita encontrada com esse filtro de mês e ano',
+        HttpStatus.NOT_FOUND,
+      );
+    }
+
+    return receitas;
   }
 }

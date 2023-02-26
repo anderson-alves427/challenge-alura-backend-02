@@ -8,11 +8,13 @@ export interface ReceitaRepository extends Repository<Receita> {
     numeracaoMesDaReceita: number,
     descricao: string,
   ): Promise<Receita[]>;
+
+  findReceitasPorMesEAno(mes: number, ano: number): Promise<Receita[]>;
 }
 
 export const customReceitaRepositoryMethods: Pick<
   ReceitaRepository,
-  'findReceitasDuplicadasMesmoMes'
+  'findReceitasDuplicadasMesmoMes' | 'findReceitasPorMesEAno'
 > = {
   async findReceitasDuplicadasMesmoMes(
     this: Repository<Receita>,
@@ -27,6 +29,21 @@ export const customReceitaRepositoryMethods: Pick<
         {
           data: numeracaoMesDaReceita,
           descricao: descricao,
+        },
+      )
+      .getMany();
+
+    return receitasDuplicadasMesmoMes;
+  },
+  async findReceitasPorMesEAno(mes: number, ano: number): Promise<Receita[]> {
+    const receitasDuplicadasMesmoMes = await this.createQueryBuilder()
+      .select('receitas')
+      .from(Receita, 'receitas')
+      .where(
+        'MONTH(receitas.data) = :mes AND YEAR(receitas.data) = :ano AND receitas.ativo = 1',
+        {
+          mes: mes,
+          ano: ano,
         },
       )
       .getMany();
