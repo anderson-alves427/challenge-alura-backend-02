@@ -7,22 +7,22 @@ import {
 import { Module } from '@nestjs/common';
 import { ReceitasController } from './receitas.controller';
 import { ReceitasService } from './receitas.service';
-import { ReceitaEntity } from './entities/receita.entity';
+import { Receita } from './entities/receita.entity';
 import { DataSource } from 'typeorm';
 import { ReceitasValidacoes } from './validacoes/receitas-validacoes';
 
 @Module({
-  imports: [TypeOrmModule.forFeature([ReceitaEntity])],
+  imports: [TypeOrmModule.forFeature([Receita])],
   controllers: [ReceitasController],
   providers: [
     ReceitasService,
     ReceitasValidacoes,
     {
-      provide: getRepositoryToken(ReceitaEntity),
+      provide: getRepositoryToken(Receita),
       inject: [getDataSourceToken()],
       useFactory(dataSource: DataSource) {
         return dataSource
-          .getRepository(ReceitaEntity)
+          .getRepository(Receita)
           .extend(customReceitaRepositoryMethods);
       },
     },

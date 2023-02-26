@@ -3,7 +3,7 @@ import { ResponseDeleteReceitaDTO } from './dto/response-deleteReceita.dto';
 import { ReceitasValidacoes } from './validacoes/receitas-validacoes';
 import { CreateReceitaDTO } from './dto/create-receita.dto';
 import { Injectable } from '@nestjs/common';
-import { ReceitaEntity } from './entities/receita.entity';
+import { Receita } from './entities/receita.entity';
 import { ReceitaRepository } from './receita.repository';
 import { InjectRepository } from '@nestjs/typeorm';
 import { ResponseDetalhamentoDTO } from './dto/response-detalhamento.dto';
@@ -11,17 +11,17 @@ import { ResponseDetalhamentoDTO } from './dto/response-detalhamento.dto';
 @Injectable()
 export class ReceitasService {
   constructor(
-    @InjectRepository(ReceitaEntity)
+    @InjectRepository(Receita)
     private receitaRepository: ReceitaRepository,
 
     private readonly receitasValidacoes: ReceitasValidacoes,
   ) {}
 
-  async findReceitas(): Promise<ReceitaEntity[]> {
+  async findReceitas(): Promise<Receita[]> {
     return await this.receitaRepository.findBy({ ativo: 1 });
   }
 
-  async create(dados: CreateReceitaDTO): Promise<ReceitaEntity> {
+  async create(dados: CreateReceitaDTO): Promise<Receita> {
     const numeracaoMesDaReceita = dados.data.getMonth() + 1;
     await this.receitasValidacoes.verificaSeReceitaEDuplicada(
       numeracaoMesDaReceita,
@@ -42,7 +42,7 @@ export class ReceitasService {
   async atualizarReceitas(
     id: number,
     dados: UpdateReceitaDTO,
-  ): Promise<ReceitaEntity> {
+  ): Promise<Receita> {
     const receita = await this.receitasValidacoes.retornaReceitaExistente(id);
     const receitaAtualizada = Object.assign(receita, dados);
     await this.receitaRepository.save(receitaAtualizada);

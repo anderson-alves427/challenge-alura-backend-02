@@ -1,13 +1,13 @@
 import type { Repository } from 'typeorm';
-import { ReceitaEntity } from './entities/receita.entity';
+import { Receita } from './entities/receita.entity';
 
-export interface ReceitaRepository extends Repository<ReceitaEntity> {
-  this: Repository<ReceitaEntity>;
+export interface ReceitaRepository extends Repository<Receita> {
+  this: Repository<Receita>;
 
   findReceitasDuplicadasMesmoMes(
     numeracaoMesDaReceita: number,
     descricao: string,
-  ): Promise<ReceitaEntity[]>;
+  ): Promise<Receita[]>;
 }
 
 export const customReceitaRepositoryMethods: Pick<
@@ -15,13 +15,13 @@ export const customReceitaRepositoryMethods: Pick<
   'findReceitasDuplicadasMesmoMes'
 > = {
   async findReceitasDuplicadasMesmoMes(
-    this: Repository<ReceitaEntity>,
+    this: Repository<Receita>,
     numeracaoMesDaReceita,
     descricao,
   ) {
     const receitasDuplicadasMesmoMes = await this.createQueryBuilder()
       .select('receita')
-      .from(ReceitaEntity, 'receita')
+      .from(Receita, 'receita')
       .where(
         'MONTH(receita.data) = :data AND receita.descricao = :descricao AND receita.ativo = 1',
         {

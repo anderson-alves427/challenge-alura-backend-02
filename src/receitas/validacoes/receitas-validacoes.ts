@@ -1,5 +1,5 @@
 import { HttpStatus } from '@nestjs/common/enums';
-import { ReceitaEntity } from 'src/receitas/entities/receita.entity';
+import { Receita } from 'src/receitas/entities/receita.entity';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Injectable, HttpException } from '@nestjs/common';
 import { ReceitaRepository } from '../receita.repository';
@@ -7,7 +7,7 @@ import { ReceitaRepository } from '../receita.repository';
 @Injectable()
 export class ReceitasValidacoes {
   constructor(
-    @InjectRepository(ReceitaEntity)
+    @InjectRepository(Receita)
     private receitaRepository: ReceitaRepository,
   ) {}
 
@@ -29,7 +29,7 @@ export class ReceitasValidacoes {
     }
   }
 
-  async retornaReceitaExistente(id: number): Promise<ReceitaEntity> {
+  async retornaReceitaExistente(id: number): Promise<Receita> {
     const receita = await this.receitaRepository.findOneBy({
       id: id,
       ativo: 1,
