@@ -1,3 +1,4 @@
+import { ListDespesaDTO } from './dto/list-despesa.dto';
 import { ResponseDetalhamentoDespesaDTO } from './dto/response-detalhamento-despesa.dto';
 import { HttpStatus } from '@nestjs/common/enums';
 import { InjectRepository } from '@nestjs/typeorm';
@@ -8,6 +9,7 @@ import { UpdateDespesaDto } from './dto/update-despesa.dto';
 import { DespesaRepository } from './despesa.repository';
 import { DespesaValidacoes } from './validacoes/despesa-validacoes';
 import { ResponseDeletaDespesaDTO } from './dto/response-deleta-despesa.dto';
+import { Like } from 'typeorm';
 
 @Injectable()
 export class DespesasService {
@@ -30,15 +32,13 @@ export class DespesasService {
     );
   }
 
-  async findAll(): Promise<Despesa[]> {
-    const despesas = await this.depesaRepository.findBy({ ativo: 1 });
-    if (!despesas.length) {
-      throw new HttpException(
-        'Nenhuma despesa encontrada.',
-        HttpStatus.NOT_FOUND,
-      );
+  async findAll(listDespesaDTO: ListDespesaDTO): Promise<Despesa[]> {
+    if (!listDespesaDTO?.descricao) {
+      return await this.depesaRepository.findBy({ ativo: 1 });
     }
-    return despesas;
+    return await this.depesaRepository.find({
+      where: { descricao: Like(`%${listDespesaDTO.descricao}%`), ativo: 1 },
+    });
   }
 
   async findOne(id: number): Promise<Despesa> {

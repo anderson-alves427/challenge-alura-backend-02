@@ -1,3 +1,4 @@
+import { ListDespesaDTO } from './dto/list-despesa.dto';
 import { ResponseDeletaDespesaDTO } from './dto/response-deleta-despesa.dto';
 import { ResponseDetalhamentoDespesaDTO } from './dto/response-detalhamento-despesa.dto';
 import { Despesa } from './entities/despesa.entity';
@@ -9,6 +10,7 @@ import {
   Put,
   Param,
   Delete,
+  Query,
 } from '@nestjs/common';
 import { DespesasService } from './despesas.service';
 import { CreateDespesaDto } from './dto/create-despesa.dto';
@@ -24,8 +26,8 @@ export class DespesasController {
   }
 
   @Get()
-  async findAll(): Promise<Despesa[]> {
-    return await this.despesasService.findAll();
+  async findAll(@Query() listDespesaDTO: ListDespesaDTO): Promise<Despesa[]> {
+    return await this.despesasService.findAll(listDespesaDTO);
   }
 
   @Get(':id')

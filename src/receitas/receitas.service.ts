@@ -20,7 +20,6 @@ export class ReceitasService {
   ) {}
 
   async findReceitas(listReceitasDTO: ListReceitaDTO): Promise<Receita[]> {
-    console.log(listReceitasDTO);
     if (!listReceitasDTO?.descricao) {
       return await this.receitaRepository.findBy({ ativo: 1 });
     }
