@@ -23,6 +23,7 @@ export class DespesasService {
       numeracaoMesDaDespesa,
       createDespesaDto.descricao,
     );
+
     return await this.depesaRepository.save(
       this.depesaRepository.create(createDespesaDto),
     );

@@ -1,11 +1,4 @@
-import { Categoria } from './categoria.entity';
-import {
-  Entity,
-  Column,
-  PrimaryGeneratedColumn,
-  ManyToOne,
-  JoinColumn,
-} from 'typeorm';
+import { Entity, Column, PrimaryGeneratedColumn } from 'typeorm';
 
 @Entity({ name: 'despesas' })
 export class Despesa {
@@ -23,8 +16,4 @@ export class Despesa {
 
   @Column('tinyint', { default: 1 })
   ativo: number;
-
-  @ManyToOne(() => Categoria, (categoria) => categoria.categorias)
-  @JoinColumn({ name: 'id_categoria' })
-  categoria: Categoria;
 }

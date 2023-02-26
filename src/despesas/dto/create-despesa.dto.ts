@@ -1,5 +1,11 @@
 import { Type } from 'class-transformer';
-import { IsString, IsNotEmpty, IsNumber, IsDate } from 'class-validator';
+import {
+  IsString,
+  IsNotEmpty,
+  IsNumber,
+  IsDate,
+  IsOptional,
+} from 'class-validator';
 export class CreateDespesaDto {
   @IsString()
   @IsNotEmpty()
@@ -13,4 +19,15 @@ export class CreateDespesaDto {
   @IsDate()
   @Type(() => Date)
   data: Date;
+
+  @IsString()
+  @IsOptional()
+  id_categoria:
+    | 'Alimentação'
+    | 'Sáude'
+    | 'Moradia'
+    | 'Transporte'
+    | 'Educação'
+    | 'Lazer'
+    | 'Outros';
 }
