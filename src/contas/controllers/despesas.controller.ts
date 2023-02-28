@@ -15,7 +15,7 @@ import { ListDespesaDTO } from '../dtos/despesas/list-despesa.dto';
 import { UpdateDespesaDto } from '../dtos/despesas/update-despesa.dto';
 import { ResponseDetalhamentoDespesaDTO } from '../dtos/despesas/response-detalhamento-despesa.dto';
 import { ResponseDeletaDespesaDTO } from '../dtos/despesas/response-deleta-despesa.dto';
-import { FiltraDespesaMesAnoDTO } from '../dtos/despesas/filtra-despesa-mes-ano.dto';
+import { FiltraReceitaMesAnoDTO } from '../dtos/receitas/filtra-receita-mes-ano.dto';
 
 @Controller('despesas')
 export class DespesasController {
@@ -51,7 +51,7 @@ export class DespesasController {
 
   @Get(':ano/:mes')
   async filtraDespesaMesEAno(
-    @Param() filtraDespesaMesAnoDTO: FiltraDespesaMesAnoDTO,
+    @Param() filtraDespesaMesAnoDTO: FiltraReceitaMesAnoDTO,
   ): Promise<Despesa[]> {
     return await this.despesasService.filtraDespesaMesAnoDTO(
       filtraDespesaMesAnoDTO,

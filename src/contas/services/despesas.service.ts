@@ -9,7 +9,7 @@ import { ListDespesaDTO } from '../dtos/despesas/list-despesa.dto';
 import { ResponseDetalhamentoDespesaDTO } from '../dtos/despesas/response-detalhamento-despesa.dto';
 import { UpdateDespesaDto } from '../dtos/despesas/update-despesa.dto';
 import { ResponseDeletaDespesaDTO } from '../dtos/despesas/response-deleta-despesa.dto';
-import { FiltraDespesaMesAnoDTO } from '../dtos/despesas/filtra-despesa-mes-ano.dto';
+import { FiltraMesAnoDTO } from '../dtos/filtra-mes-ano.dto';
 
 @Injectable()
 export class DespesasService {
@@ -66,7 +66,7 @@ export class DespesasService {
   }
 
   async filtraDespesaMesAnoDTO(
-    filtraDespesaMesAnoDTO: FiltraDespesaMesAnoDTO,
+    filtraDespesaMesAnoDTO: FiltraMesAnoDTO,
   ): Promise<Despesa[]> {
     const receitas = await this.depesaRepository.findDespesasPorMesEAno(
       +filtraDespesaMesAnoDTO.mes,

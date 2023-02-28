@@ -1,5 +1,5 @@
 import { IsIn, IsNotEmpty, Length, Matches } from 'class-validator';
-export class FiltraDespesaMesAnoDTO {
+export class FiltraMesAnoDTO {
   @IsNotEmpty()
   @Length(4, 4)
   @Matches(/^[0-9]{4}$/, {

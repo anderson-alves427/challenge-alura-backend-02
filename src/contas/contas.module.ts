@@ -1,3 +1,4 @@
+import { ResumoService } from './services/resumo.service';
 import {
   TypeOrmModule,
   getRepositoryToken,
@@ -15,13 +16,15 @@ import { customReceitaRepositoryMethods } from './repositories/receita.repositor
 import { ReceitasService } from './services/receitas.service';
 import { ReceitasValidacoes } from './validacoes/receitas-validacoes';
 import { ReceitasController } from './controllers/receitas.controller';
+import { ResumoController } from './controllers/resumo.controller';
 
 @Module({
   imports: [TypeOrmModule.forFeature([Despesa, Receita])],
-  controllers: [DespesasController, ReceitasController],
+  controllers: [DespesasController, ReceitasController, ResumoController],
   providers: [
     DespesasService,
     ReceitasService,
+    ResumoService,
     DespesaValidacoes,
     ReceitasValidacoes,
     {
