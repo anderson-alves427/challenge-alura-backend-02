@@ -1,8 +1,3 @@
-import { FiltraReceitaMesAnoDTO } from './dto/filtra-receita-mes-ano.dto';
-import { ListReceitaDTO } from './dto/list-receita.dto';
-import { UpdateReceitaDTO } from './dto/update-receita.dto';
-import { ResponseDeleteReceitaDTO } from './dto/response-deleteReceita.dto';
-import { ResponseDetalhamentoDTO } from './dto/response-detalhamento.dto';
 import {
   Controller,
   Get,
@@ -13,9 +8,14 @@ import {
   Put,
   Query,
 } from '@nestjs/common';
-import { ReceitasService } from './receitas.service';
-import { Receita } from './entities/receita.entity';
-import { CreateReceitaDTO } from './dto/create-receita.dto';
+import { CreateReceitaDTO } from '../dtos/receitas/create-receita.dto';
+import { ListReceitaDTO } from '../dtos/receitas/list-receita.dto';
+import { Receita } from '../entities/receita.entity';
+import { ReceitasService } from '../services/receitas.service';
+import { UpdateReceitaDTO } from '../dtos/receitas/update-receita.dto';
+import { ResponseDeleteReceitaDTO } from '../dtos/receitas/response-deleteReceita.dto';
+import { FiltraReceitaMesAnoDTO } from '../dtos/receitas/filtra-receita-mes-ano.dto';
+import { ResponseDetalhamentoReceitaDTO } from '../dtos/receitas/response-detalhamento.dto';
 
 @Controller('receitas')
 export class ReceitasController {
@@ -34,7 +34,9 @@ export class ReceitasController {
   }
 
   @Get(':id')
-  async detalhar(@Param('id') id: number): Promise<ResponseDetalhamentoDTO> {
+  async detalhar(
+    @Param('id') id: number,
+  ): Promise<ResponseDetalhamentoReceitaDTO> {
     return await this.receitasService.getReceitaById(id);
   }
 

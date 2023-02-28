@@ -1,9 +1,9 @@
-import { CreateDespesaDto } from './../dto/create-despesa.dto';
+import { CreateDespesaDto } from '../dtos/despesas/create-despesa.dto';
 import { HttpStatus } from '@nestjs/common/enums';
-import { Despesa } from 'src/Despesas/entities/Despesa.entity';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Injectable, HttpException } from '@nestjs/common';
-import { DespesaRepository } from '../despesa.repository';
+import { DespesaRepository } from '../repositories/despesa.repository';
+import { Despesa } from '../entities/despesa.entity';
 
 @Injectable()
 export class DespesaValidacoes {

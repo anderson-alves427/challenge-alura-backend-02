@@ -1,13 +1,11 @@
-import { Despesa } from './despesas/entities/despesa.entity';
-import { Receita } from './receitas/entities/receita.entity';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { Module } from '@nestjs/common';
-import { ReceitasModule } from './receitas/receitas.module';
-import { DespesasModule } from './despesas/despesas.module';
+import { Receita } from './contas/entities/receita.entity';
+import { Despesa } from './contas/entities/despesa.entity';
+import { ContasModule } from './contas/contas.module';
 
 @Module({
   imports: [
-    ReceitasModule,
     TypeOrmModule.forRoot({
       type: 'mysql',
       host: 'localhost',
@@ -18,7 +16,7 @@ import { DespesasModule } from './despesas/despesas.module';
       entities: [Receita, Despesa],
       synchronize: false,
     }),
-    DespesasModule,
+    ContasModule,
   ],
   controllers: [],
   providers: [],

@@ -1,5 +1,5 @@
 import type { Repository } from 'typeorm';
-import { Receita } from './entities/receita.entity';
+import { Receita } from '../entities/receita.entity';
 
 export interface ReceitaRepository extends Repository<Receita> {
   this: Repository<Receita>;

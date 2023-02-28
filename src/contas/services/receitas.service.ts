@@ -1,16 +1,16 @@
 import { HttpStatus } from '@nestjs/common/enums';
-import { FiltraReceitaMesAnoDTO } from './dto/filtra-receita-mes-ano.dto';
-import { ListReceitaDTO } from './dto/list-receita.dto';
-import { UpdateReceitaDTO } from './dto/update-receita.dto';
-import { ResponseDeleteReceitaDTO } from './dto/response-deleteReceita.dto';
-import { ReceitasValidacoes } from './validacoes/receitas-validacoes';
-import { CreateReceitaDTO } from './dto/create-receita.dto';
 import { Injectable, HttpException } from '@nestjs/common';
-import { Receita } from './entities/receita.entity';
-import { ReceitaRepository } from './receita.repository';
 import { InjectRepository } from '@nestjs/typeorm';
-import { ResponseDetalhamentoDTO } from './dto/response-detalhamento.dto';
 import { Like } from 'typeorm';
+import { Receita } from '../entities/receita.entity';
+import { ReceitaRepository } from '../repositories/receita.repository';
+import { ReceitasValidacoes } from '../validacoes/receitas-validacoes';
+import { ListReceitaDTO } from '../dtos/receitas/list-receita.dto';
+import { CreateReceitaDTO } from '../dtos/receitas/create-receita.dto';
+import { ResponseDetalhamentoReceitaDTO } from '../dtos/receitas/response-detalhamento.dto';
+import { UpdateReceitaDTO } from '../dtos/receitas/update-receita.dto';
+import { ResponseDeleteReceitaDTO } from '../dtos/receitas/response-deleteReceita.dto';
+import { FiltraReceitaMesAnoDTO } from '../dtos/receitas/filtra-receita-mes-ano.dto';
 
 @Injectable()
 export class ReceitasService {
@@ -43,7 +43,7 @@ export class ReceitasService {
     );
   }
 
-  async getReceitaById(id: number): Promise<ResponseDetalhamentoDTO> {
+  async getReceitaById(id: number): Promise<ResponseDetalhamentoReceitaDTO> {
     const receita = await this.receitasValidacoes.retornaReceitaExistente(id);
 
     return receita;

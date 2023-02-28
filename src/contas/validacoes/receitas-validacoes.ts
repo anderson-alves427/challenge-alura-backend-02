@@ -1,8 +1,8 @@
 import { HttpStatus } from '@nestjs/common/enums';
-import { Receita } from 'src/receitas/entities/receita.entity';
+import { Receita } from 'src/contas/entities/receita.entity';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Injectable, HttpException } from '@nestjs/common';
-import { ReceitaRepository } from '../receita.repository';
+import { ReceitaRepository } from '../repositories/receita.repository';
 
 @Injectable()
 export class ReceitasValidacoes {
