@@ -5,7 +5,7 @@ import {
 } from '@nestjs/typeorm';
 import { Module } from '@nestjs/common';
 import { DespesasService } from './services/despesas.service';
-import { DespesasController } from './controlllers/despesas.controller';
+import { DespesasController } from './controllers/despesas.controller';
 import { Despesa } from './entities/despesa.entity';
 import { DataSource } from 'typeorm';
 import { customDespesaRepositoryMethods } from './repositories/despesa.repository';
@@ -14,7 +14,7 @@ import { Receita } from './entities/receita.entity';
 import { customReceitaRepositoryMethods } from './repositories/receita.repository';
 import { ReceitasService } from './services/receitas.service';
 import { ReceitasValidacoes } from './validacoes/receitas-validacoes';
-import { ReceitasController } from './controlllers/receitas.controller';
+import { ReceitasController } from './controllers/receitas.controller';
 
 @Module({
   imports: [TypeOrmModule.forFeature([Despesa, Receita])],
