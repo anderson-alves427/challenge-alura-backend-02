@@ -11,6 +11,7 @@ import { ResponseDetalhamentoReceitaDTO } from '../dtos/receitas/response-detalh
 import { UpdateReceitaDTO } from '../dtos/receitas/update-receita.dto';
 import { ResponseDeleteReceitaDTO } from '../dtos/receitas/response-deleteReceita.dto';
 import { FiltraReceitaMesAnoDTO } from '../dtos/receitas/filtra-receita-mes-ano.dto';
+import { FiltraMesAnoDTO } from '../dtos/filtra-mes-ano.dto';
 
 @Injectable()
 export class ReceitasService {
@@ -70,11 +71,11 @@ export class ReceitasService {
   }
 
   async filtraReceitaMesAnoDTO(
-    filtraReceitaMesAnoDTO: FiltraReceitaMesAnoDTO,
+    filtraMesAnoDTO: FiltraMesAnoDTO,
   ): Promise<Receita[]> {
     const receitas = await this.receitaRepository.findReceitasPorMesEAno(
-      +filtraReceitaMesAnoDTO.mes,
-      +filtraReceitaMesAnoDTO.ano,
+      +filtraMesAnoDTO.mes,
+      +filtraMesAnoDTO.ano,
     );
     if (!receitas.length) {
       throw new HttpException(

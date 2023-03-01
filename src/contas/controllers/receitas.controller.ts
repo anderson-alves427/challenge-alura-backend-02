@@ -16,6 +16,7 @@ import { UpdateReceitaDTO } from '../dtos/receitas/update-receita.dto';
 import { ResponseDeleteReceitaDTO } from '../dtos/receitas/response-deleteReceita.dto';
 import { FiltraReceitaMesAnoDTO } from '../dtos/receitas/filtra-receita-mes-ano.dto';
 import { ResponseDetalhamentoReceitaDTO } from '../dtos/receitas/response-detalhamento.dto';
+import { FiltraMesAnoDTO } from '../dtos/filtra-mes-ano.dto';
 
 @Controller('receitas')
 export class ReceitasController {
@@ -55,10 +56,8 @@ export class ReceitasController {
 
   @Get(':ano/:mes')
   async filtraReceitaMesEAno(
-    @Param() filtraReceitaMesAnoDTO: FiltraReceitaMesAnoDTO,
+    @Param() filtraMesAnoDTO: FiltraMesAnoDTO,
   ): Promise<Receita[]> {
-    return await this.receitasService.filtraReceitaMesAnoDTO(
-      filtraReceitaMesAnoDTO,
-    );
+    return await this.receitasService.filtraReceitaMesAnoDTO(filtraMesAnoDTO);
   }
 }

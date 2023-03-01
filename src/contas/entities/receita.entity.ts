@@ -8,7 +8,7 @@ export class Receita {
   @Column('varchar', { length: 250 })
   descricao: string;
 
-  @Column('decimal')
+  @Column('decimal', { precision: 10, scale: 2 })
   valor: number;
 
   @Column('date')

@@ -10,11 +10,15 @@ export interface ReceitaRepository extends Repository<Receita> {
   ): Promise<Receita[]>;
 
   findReceitasPorMesEAno(mes: number, ano: number): Promise<Receita[]>;
+
+  somaTotalReceitas(ano: number, mes: number): Promise<number>;
 }
 
 export const customReceitaRepositoryMethods: Pick<
   ReceitaRepository,
-  'findReceitasDuplicadasMesmoMes' | 'findReceitasPorMesEAno'
+  | 'findReceitasDuplicadasMesmoMes'
+  | 'findReceitasPorMesEAno'
+  | 'somaTotalReceitas'
 > = {
   async findReceitasDuplicadasMesmoMes(
     this: Repository<Receita>,
@@ -49,5 +53,23 @@ export const customReceitaRepositoryMethods: Pick<
       .getMany();
 
     return receitasDuplicadasMesmoMes;
+  },
+  async somaTotalReceitas(
+    this: Repository<Receita>,
+    ano: number,
+    mes: number,
+  ): Promise<number> {
+    const valorTotalSoma = await this.createQueryBuilder('receitas')
+      .select('SUM(receitas.valor)', 'total')
+      .where(
+        'MONTH(receitas.data) = :mes AND YEAR(receitas.data) = :ano AND receitas.ativo = 1',
+        {
+          mes: mes,
+          ano: ano,
+        },
+      )
+      .getRawOne();
+
+    return valorTotalSoma.total;
   },
 };
